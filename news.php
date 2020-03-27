@@ -15,11 +15,9 @@ if($array > 0 )
         $resultName = mysqli_fetch_assoc($checkUserName);
         $result[$i]['creator'] = $resultName['name'];
     }
-    
     echo json_encode($result);
 }
 else{
     echo "Меньше 0";
 }
-
 ?>

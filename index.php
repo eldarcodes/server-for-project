@@ -7,15 +7,17 @@ header('Content-Type: application/json');
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-if ($_SERVER['REQUEST_URI'] == '/main') {
+if ($_SERVER['REQUEST_URI'] == '/main/') {
     include "news.php";
 }
 if ($_SERVER['REQUEST_URI'] == '/registration') {
     include "userinBD.php";
     if ($_SESSION['access'] == "0") {
-        $message = false;
+        include "registration.php";
+        echo json_encode($_SESSION["Registration"]);
     } else {
         $message = true;
+        echo json_encode($message);
     }
-    echo json_encode($message);
+
 }
