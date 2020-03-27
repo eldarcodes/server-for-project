@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once "connectToBD.php";
-include "userinBD.php";
 unset($_SESSION['response']);
 $takeID = 5;
 $checkUserID = mysqli_query($dbconnect, "SELECT * FROM `users` WHERE `id` = '$takeID'");

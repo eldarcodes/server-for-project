@@ -12,17 +12,6 @@ if ($_SERVER['REQUEST_URI'] == '/main') {
 if ($_SERVER['REQUEST_URI'] == '/registration') {
     include "registration.php";
 }
-
-// if ($_SERVER['REQUEST_URI'] == '/auth') {
-//     if ($_SESSION['access'] == "0") {
-//         include "auth.php";
-//         if (isset($_SESSION['user'])) {
-//             echo json_encode($_SESSION["user"]);
-//         } else {
-//             echo json_encode($_SESSION["auth"]);
-//         }
-//     } else {
-//         $message = true;
-//         echo json_encode($message);
-//     }
-// }
+if ($_SERVER['REQUEST_URI'] == '/auth') {
+    include "auth.php";
+}
