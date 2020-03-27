@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once "connectToBD.php";
-$takeID = $_POST['id'];
+$takeID = 140;
 $access = 1;
 
 $checkUserID = mysqli_query($dbconnect, "SELECT * FROM `users` WHERE `id` = '$takeID'");
