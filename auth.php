@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once "connectToBD.php";
 $login = $_POST['login'];
 $password = $_POST['password'];
@@ -24,16 +24,26 @@ if (mysqli_num_rows($checkuser) > 0) {
     }
     $_SESSION['user'] = [
         'id' => $user['id'],
-        'role' => $_SESSION['user']['role']
+        'role' => $_SESSION['user']['role'],
+        'message' => 'Вы успешно авторизовались!'
     ];
 } else {
     unset($_SESSION['user']);
     $checkLogin = mysqli_query($dbconnect, "SELECT * FROM `users` WHERE `login` = '$login'");
     $checkpassword = mysqli_query($dbconnect, "SELECT * FROM `users` WHERE `password` = '$password'");
     if (mysqli_num_rows($checkLogin) === 0) {
-        $_SESSION['auth'] = "Пользователя не существует!";
+        $_SESSION['auth'] = [
+            'id' => null,
+            'role' => null,
+            'message' => 'Пользователя не существует!'
+        ];
     }
-    if (mysqli_num_rows($checkpassword) === 0) {
-        $_SESSION['auth'] = "Вы ввели неверный пароль!";
-    } 
+    else if (mysqli_num_rows($checkpassword) === 0) {
+        $_SESSION['auth'] = [
+            'id' => null,
+            'role' => null,
+            'message' => 'Вы ввели неверный пароль!'
+        ];
+    }
+    
 }

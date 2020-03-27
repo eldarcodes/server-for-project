@@ -15,20 +15,15 @@ $checkEmail = mysqli_query($dbconnect, "SELECT * FROM `users` WHERE `email` = '$
 
 if ((mysqli_num_rows($checkLogin)) > 0) {
     $_SESSION['Registration'] = "Пользователь с таким логином зарегистрирован!";
-} 
-if ((mysqli_num_rows($checkEmail)) > 0) {
+}
+else if ((mysqli_num_rows($checkEmail)) > 0) {
     $_SESSION['Registration'] = "Пользователь с данной почтой существует!";
 }
-if((mysqli_num_rows($checkEmail)) > 0 && (mysqli_num_rows($checkLogin)) > 0)
-{
+else if ((mysqli_num_rows($checkEmail)) > 0 && (mysqli_num_rows($checkLogin)) > 0) {
     $_SESSION['Registration'] = "Пользователь с таким логином и почтой - существует!";
 }
-if((mysqli_num_rows($checkEmail)) ==  0 && (mysqli_num_rows($checkLogin)) == 0)
-{
-$userpassword = md5($userpassword);
-mysqli_query($dbconnect, "INSERT INTO `users`(`id`, `name`, `surname`, `login`, `email`, `password`, `lvluser`, `date_registration`, `city`, `gender`, `avatar`, `date_birhday`) VALUES (NULL,'$username','$usersurname','$userlogin','$useremail','$userpassword','1','$user_register_date','','','$defaultAvatar','')");
-$_SESSION['Registration'] = "Вы успешно зарегистрировались";
+else if ((mysqli_num_rows($checkEmail)) ==  0 && (mysqli_num_rows($checkLogin)) == 0) {
+    $userpassword = md5($userpassword);
+    mysqli_query($dbconnect, "INSERT INTO `users`(`id`, `name`, `surname`, `login`, `email`, `password`, `lvluser`, `date_registration`, `city`, `gender`, `avatar`, `date_birhday`) VALUES (NULL,'$username','$usersurname','$userlogin','$useremail','$userpassword','1','$user_register_date','','','$defaultAvatar','')");
+    $_SESSION['Registration'] = "Вы успешно зарегистрировались";
 }
-
-
-
