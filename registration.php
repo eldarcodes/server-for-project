@@ -1,7 +1,21 @@
 <?php
 session_start();
 require_once "connectToBD.php";
-$_SESSION['Registration'] == "";
+include "userinBD.php";
+unset($_SESSION['response']);
+$takeID = 5;
+$checkUserID = mysqli_query($dbconnect, "SELECT * FROM `users` WHERE `id` = '$takeID'");
+if (mysqli_num_rows($checkUserID) > 0) {
+    $access = 1;
+} else {
+    $access = 0;
+}
+if($access == "1")
+{
+    $_SESSION['response'] = true;
+}
+else{
+$_SESSION['response'] == "";
 $defaultAvatar = "../assets/img/photo_2020-03-12_22-13-50.jpg";
 $userlogin = $_POST['login'];
 $userpassword = $_POST['password'];
@@ -14,16 +28,18 @@ $checkLogin = mysqli_query($dbconnect, "SELECT * FROM `users` WHERE `login` = '$
 $checkEmail = mysqli_query($dbconnect, "SELECT * FROM `users` WHERE `email` = '$useremail'");
 
 if ((mysqli_num_rows($checkLogin)) > 0) {
-    $_SESSION['Registration'] = "Пользователь с таким логином зарегистрирован!";
+    $_SESSION['response'] = "Пользователь с таким логином зарегистрирован!";
 }
 else if ((mysqli_num_rows($checkEmail)) > 0) {
-    $_SESSION['Registration'] = "Пользователь с данной почтой существует!";
+    $_SESSION['response'] = "Пользователь с данной почтой существует!";
 }
 else if ((mysqli_num_rows($checkEmail)) > 0 && (mysqli_num_rows($checkLogin)) > 0) {
-    $_SESSION['Registration'] = "Пользователь с таким логином и почтой - существует!";
+    $_SESSION['response'] = "Пользователь с таким логином и почтой - существует!";
 }
 else if ((mysqli_num_rows($checkEmail)) ==  0 && (mysqli_num_rows($checkLogin)) == 0) {
     $userpassword = md5($userpassword);
     mysqli_query($dbconnect, "INSERT INTO `users`(`id`, `name`, `surname`, `login`, `email`, `password`, `lvluser`, `date_registration`, `city`, `gender`, `avatar`, `date_birhday`) VALUES (NULL,'$username','$usersurname','$userlogin','$useremail','$userpassword','1','$user_register_date','','','$defaultAvatar','')");
-    $_SESSION['Registration'] = "Вы успешно зарегистрировались";
+    $_SESSION['response'] = "Вы успешно зарегистрировались";
 }
+}
+echo json_encode($_SESSION['response']);
